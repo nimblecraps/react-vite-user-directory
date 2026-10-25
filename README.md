@@ -1,16 +1,9 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Reflection Questions
+1. Why is it dangerous to store passwords in plain text, and how does hashing prevent harm if the database is compromised?**
+Storing plain-text passwords leaves users vulnerable to account takeover, identity theft, and credential stuffing attacks if the database is leaked. Hashing converts passwords into irreversible, fixed-length strings using a one-way algorithm so original plain-text values cannot be read or reversed. Salted hashes further prevent attackers from using precomputed lookup tables (rainbow tables) to crack stored credentials.
+2. The login endpoint returns the same error for "user not found" and "wrong password." Why is this better than giving specific messages?**
+Generic error messages like "Invalid credentials" prevent account enumeration attacks. If the API specified whether the email or password was incorrect, malicious actors could probe the endpoint to harvest valid user email addresses. Keeping the response identical protects privacy and reduces the risk of targeted brute-force attempts.
+3. In your own words, what does the middleware do on every protected request, and why is it better than putting token-checking code inside every route handler?**
+The middleware extracts the `Authorization` header, verifies the JWT using the secret key, attaches the decoded payload to `req.user`, and calls `next()` to pass control to the route handler. Centralizing this logic in a middleware function follows the DRY (Don't Repeat Yourself) principle, making the codebase cleaner, easier to maintain, and less prone to security oversights across multiple routes.
+4. What is one thing that could still go wrong in this system (e.g., token theft, no HTTPS, weak secrets), and how would you address it in a real application?**
+Without HTTPS, tokens can be intercepted in transit via man-in-the-middle (MITM) attacks. In a production environment, this should be addressed by enforcing HTTPS/TLS encryption across all endpoints, storing tokens securely on the client side (such as in `HttpOnly` cookies to mitigate XSS), and implementing token expiration along with refresh token rotation.
