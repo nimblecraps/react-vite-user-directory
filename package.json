@@ -1,21 +1,35 @@
 {
   "name": "express-student-api",
   "version": "1.0.0",
+<<<<<<< HEAD
   "description": "Student Directory API with Authentication",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js"
+=======
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+>>>>>>> dfdd47ffc09e6c81906249f270270e0b237bb708
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+<<<<<<< HEAD
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "dotenv": "^18.0.4",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
+=======
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^18.0.4",
+    "express": "^5.2.1",
+>>>>>>> dfdd47ffc09e6c81906249f270270e0b237bb708
     "mongoose": "^9.10.2"
   }
 }
