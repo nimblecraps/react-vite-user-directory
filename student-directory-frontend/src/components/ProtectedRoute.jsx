@@ -1,16 +1,9 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
-const ProtectedRoute = ({ children }) => {
+export default function ProtectedRoute() {
   const { isAuthenticated } = useAuth();
 
-  if (!isAuthenticated) {
-    // Redirects unauthenticated users directly to /login
-    return <Navigate to="/login" replace />;
-  }
-
-  return children;
-};
-
-export default ProtectedRoute;
+  // Task 4.1: Render children if authenticated, otherwise redirect to /login
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+}
