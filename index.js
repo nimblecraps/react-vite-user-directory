@@ -1,49 +1,38 @@
-<<<<<<< HEAD
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
-const studentRoutes = require('./routes/students'); // Adjust path if your file is named differently
-=======
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
 const studentRoutes = require('./routes/students');
->>>>>>> dfdd47ffc09e6c81906249f270270e0b237bb708
 
 const app = express();
 
+// 1. Enable CORS (Make sure this origin matches your Vite frontend port)
+app.use(cors({ 
+  origin: 'http://localhost:5173' 
+}));
+
 app.use(express.json());
-<<<<<<< HEAD
 
-// Routes
+// 2. Routes
 app.use('/api/auth', authRoutes);
-app.use('/students', studentRoutes); // Fixes the 404 Cannot GET /students issue
+app.use('/api/students', studentRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
-// Connect to MongoDB and start server
-mongoose.connect(process.env.MONGO_URI || process.env.DATABASE_URL)
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server running on http://localhost:${PORT}`);
-    });
-  })
-  .catch((err) => console.error('MongoDB connection error:', err));
-=======
-app.use('/students', studentRoutes);
+// 3. Start server first
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
 
-const PORT = process.env.PORT || 3000;
+// 4. Connect to MongoDB separately
+const dbURI = process.env.MONGO_URI || process.env.DATABASE_URL;
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log('MongoDB connected successfully');
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error('MongoDB connection error:', err.message);
-  });
->>>>>>> dfdd47ffc09e6c81906249f270270e0b237bb708
+if (!dbURI) {
+  console.error('ERROR: MONGO_URI or DATABASE_URL is missing in your .env file!');
+} else {
+  mongoose.connect(dbURI)
+    .then(() => console.log('Successfully connected to MongoDB Atlas!'))
+    .catch((err) => console.error('MongoDB connection error:', err.message));
+}
