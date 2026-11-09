@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
 const studentRoutes = require('./routes/students');
+const uploadRoutes = require('./routes/upload'); // 1. Added upload route require
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(express.json());
 // 2. Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/students', studentRoutes);
+app.use('/api/upload', uploadRoutes); // 2. Registered upload route
 
 const PORT = 3000;
 
